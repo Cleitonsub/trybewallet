@@ -3,8 +3,8 @@
 import { WALLET } from '../actions';
 
 const INITIAL_STATE = {
-    currencies: [],
-    expenses: [],
+  currencies: [],
+  expenses: [],
 };
 
 const walletReducer = (state = INITIAL_STATE, action) => {
