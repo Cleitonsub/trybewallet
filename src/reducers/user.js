@@ -3,13 +3,7 @@
 import { LOGIN } from '../actions';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  email: '',
 };
 
 const loginReducer = (state = INITIAL_STATE, action) => {
