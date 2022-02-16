@@ -1,19 +1,45 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 
-import { WALLET } from '../actions';
+import { ADDEXPENSE } from '../actions';
 
 const INITIAL_STATE = {
-  currencies: [],
+  currencies: [
+    'USD',
+    'CAD',
+    'EUR',
+    'GBP',
+    'ARS',
+    'BTC',
+    'LTC',
+    'JPY',
+    'CHF',
+    'AUD',
+    'CNY',
+    'ILS',
+    'ETH',
+    'XRP',
+  ],
   expenses: [],
 };
 
 const walletReducer = (state = INITIAL_STATE, action) => {
+  console.log(action);
   switch (action.type) {
-  case WALLET: {
+  case ADDEXPENSE: {
     return {
       ...state,
-      currencies: action.currencies,
-      expenses: action.expenses,
+      expenses: [
+        ...state.expenses,
+        {
+          id: state.expenses.length,
+          value: action.payload.value,
+          description: action.payload.description,
+          currency: action.payload.currency,
+          method: action.payload.method,
+          tag: action.payload.tag,
+          exchangeRates: action.payload.exchangeRates,
+        },
+      ],
     };
   }
   default:
