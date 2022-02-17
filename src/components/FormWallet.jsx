@@ -1,8 +1,8 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addExpense } from '../actions';
-import awesomeApi from '../services/reqApi';
+import { awesomeApi } from '../services/reqApi';
 
 class FormWallet extends React.Component {
   constructor() {
@@ -12,10 +12,9 @@ class FormWallet extends React.Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      refCurrency: 'BRL',
       value: 0,
       description: '',
-      currency:'USD',
+      currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
       exchangeRates: {},
@@ -36,7 +35,7 @@ class FormWallet extends React.Component {
   async handleSave(event) {
     event.preventDefault();
     const { dispatchExpenses } = this.props;
-    
+
     this.setState({
       exchangeRates: await awesomeApi(),
     });
@@ -45,13 +44,13 @@ class FormWallet extends React.Component {
     this.setState((prevState) => ({
       // value: value * exchangeRates[currency].ask,
       total: prevState.total + value * exchangeRates[currency].ask,
-    }))
+    }));
 
     await dispatchExpenses({ value, description, currency, method, tag, exchangeRates });
     this.setState({
       value: 0,
       description: '',
-      currency:'USD',
+      currency: 'USD',
       exchangeRates: {},
     });
   }
@@ -76,7 +75,7 @@ class FormWallet extends React.Component {
             name="value"
             value={ value }
             onChange={ this.handleChange }
-          /> 
+          />
           <input
             data-testid="description-input"
             id="description-input"
@@ -95,8 +94,11 @@ class FormWallet extends React.Component {
               value={ currency }
               onChange={ this.handleChange }
             >
-              { currencies.map((curr) => <option key={ curr } data-testid={ curr } value={ curr }>{ curr }</option>) }
-              
+              { currencies.map((curr) => (
+                <option key={ curr } data-testid={ curr }>
+                  { curr }
+                </option>
+              )) }
             </select>
           </label>
           <label htmlFor="method-input">
@@ -139,9 +141,11 @@ class FormWallet extends React.Component {
   }
 }
 
-// FormWallet.propTypes = {
-  
-// };
+FormWallet.propTypes = {
+  dispatchExpenses: PropTypes.func,
+  email: PropTypes.string,
+  currencies: PropTypes.array,
+}.isRequired;
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
