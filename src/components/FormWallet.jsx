@@ -108,7 +108,7 @@ class FormWallet extends React.Component {
               id="method-input"
               name="method"
               onChange={ this.handleChange }
-            >
+              >
               <option value="Dinheiro">Dinheiro</option>
               <option value="Cartão de crédito">Cartão de crédito</option>
               <option value="Cartão de débito">Cartão de débito</option>
@@ -121,7 +121,7 @@ class FormWallet extends React.Component {
               id="tag-input"
               name="tag"
               onChange={ this.handleChange }
-            >
+              >
               <option value="Alimentação">Alimentação</option>
               <option value="Lazer">Lazer</option>
               <option value="Trabalho">Trabalho</option>
@@ -132,10 +132,28 @@ class FormWallet extends React.Component {
           <button
             type="submit"
             onClick={ this.handleSave }
-          >
+            >
             Adicionar despesa
           </button>
         </form>
+        <table
+          // Eu aprendi usar tabela por pesquisa no Google, no link:
+          //  https://www.w3schools.com/tags/tag_thead.asp
+        >
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
+        </table>
       </div>
     );
   }
