@@ -57,7 +57,7 @@ class FormWallet extends React.Component {
 
   render() {
     const { value, description, currency, total } = this.state;
-    const { email, currencies } = this.props;
+    const { email, currencies, expenses } = this.props;
     return (
       <div>
         <header>
@@ -108,7 +108,7 @@ class FormWallet extends React.Component {
               id="method-input"
               name="method"
               onChange={ this.handleChange }
-              >
+            >
               <option value="Dinheiro">Dinheiro</option>
               <option value="Cartão de crédito">Cartão de crédito</option>
               <option value="Cartão de débito">Cartão de débito</option>
@@ -121,7 +121,7 @@ class FormWallet extends React.Component {
               id="tag-input"
               name="tag"
               onChange={ this.handleChange }
-              >
+            >
               <option value="Alimentação">Alimentação</option>
               <option value="Lazer">Lazer</option>
               <option value="Trabalho">Trabalho</option>
@@ -132,11 +132,12 @@ class FormWallet extends React.Component {
           <button
             type="submit"
             onClick={ this.handleSave }
-            >
+          >
             Adicionar despesa
           </button>
         </form>
         <table
+          id="expenses-table"
           // Eu aprendi usar tabela por pesquisa no Google, no link:
           //  https://www.w3schools.com/tags/tag_thead.asp
         >
@@ -153,6 +154,32 @@ class FormWallet extends React.Component {
               <th>Editar/Excluir</th>
             </tr>
           </thead>
+          <tbody>
+            {expenses.map((expense) => (
+              <tr key={ expense.id }>
+                <td>{ expense.description }</td>
+                <td>{ expense.tag }</td>
+                <td>{ expense.method }</td>
+                <td>{ Number(expense.value).toFixed(2) }</td>
+                <td
+                  className="moeda"
+                  // string.split() divide uma string pelo argumento e ordena em um array
+                  // então eu pego a primeira chave. Link:
+                  // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String/split
+                >
+                  { expense.exchangeRates[expense.currency].name.split('/')[0] }
+                </td>
+                <td>
+                  { Number(expense.exchangeRates[expense.currency].ask).toFixed(2) }
+                </td>
+                <td>
+                  { (Number(expense.value)
+                  * expense.exchangeRates[expense.currency].ask).toFixed(2) }
+                </td>
+                <td>Real</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     );
